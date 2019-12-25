@@ -22,12 +22,12 @@ app.use(cors())
 
 app.get("/", (req, res) => {
   res.send(
-    "This is a basic express app to send emails using Mailgun. Create a post request to '/forward' to create and send an email."
+    "This is a basic express app to sign up to a newsletter. Pass an email to /register to sign up"
   )
 })
 
 // This endpoint is for testing purposes only!
-app.get("/last-email", async (req, res) => {
+app.get("/register", async (req, res) => {
   const { email } = req.body
 
   if (!email) {
@@ -35,12 +35,14 @@ app.get("/last-email", async (req, res) => {
     res.sendStatus(400)
   }
 
-  client.sendEmail({
+  await client.sendEmail({
     From: "info@fillmydiary.co.uk",
     To: "jack@noface.co.uk",
     Subject: "Test",
     TextBody: "Hello from Postmark!",
   })
+
+  res.send(`You've signed up to the Celtic Elements newsletter with ${email}`)
 })
 
 app.listen(port, () => {
