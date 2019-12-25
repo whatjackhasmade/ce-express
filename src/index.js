@@ -27,7 +27,7 @@ app.get("/", (req, res) => {
 })
 
 // This endpoint is for testing purposes only!
-app.get("/register", async (req, res) => {
+app.post("/register", async (req, res) => {
   const { email } = req.body
 
   if (!email) {
