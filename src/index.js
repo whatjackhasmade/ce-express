@@ -35,12 +35,16 @@ app.get("/register", async (req, res) => {
     res.sendStatus(400)
   }
 
-  await client.sendEmail({
-    From: "info@fillmydiary.co.uk",
-    To: "jack@noface.co.uk",
-    Subject: "Test",
-    TextBody: "Hello from Postmark!",
-  })
+  try {
+    await client.sendEmail({
+      From: "info@fillmydiary.co.uk",
+      To: "jack@noface.co.uk",
+      Subject: "Test",
+      TextBody: "Hello from Postmark!",
+    })
+  } catch (err) {
+    console.log(err)
+  }
 
   res.send(`You've signed up to the Celtic Elements newsletter with ${email}`)
 })
