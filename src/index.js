@@ -32,7 +32,7 @@ app.post("/register", async (req, res) => {
 
   if (!email) {
     throw Error("No email address provided")
-    res.sendStatus(400)
+    res.status(400).send("No email address provided")
   }
 
   try {
@@ -43,10 +43,13 @@ app.post("/register", async (req, res) => {
       TextBody: "Hello from Postmark!",
     })
   } catch (err) {
-    console.log(err)
+    throw Error(err)
+    res.status(400).send(err)
   }
 
-  res.send(`You've signed up to the Celtic Elements newsletter with ${email}`)
+  res
+    .status(200)
+    .send(`You've signed up to the Celtic Elements newsletter with ${email}`)
 })
 
 app.listen(port, () => {
